@@ -1,8 +1,14 @@
 import { makeSource, defineDocumentType } from "@contentlayer/source-files";
+import readingTime from "reading-time";
+import rehypeAutolinkHeadings from "rehype-autolink-headings";
+import rehypePrettyCode from "rehype-pretty-code";
+import rehypeSlug from "rehype-slug";
+import remarkGfm from "remark-gfm";
 
 const Blog = defineDocumentType(() => ({
   name: "Blog",
   filePathPattern: "**/**/*.mdx",
+  contentType: "mdx",
   fields: {
     title: {
       type: "string",
@@ -39,11 +45,28 @@ const Blog = defineDocumentType(() => ({
       type: "string",
       resolve: (doc) => `/blogs/${doc._raw.flattenedPath}`,
     },
+    readingTime: {
+      type: "json",
+      resolve: (doc) => readingTime(doc.body.raw),
+    },
   },
 }));
+
+const codeOptions = {
+  theme: "github-dark",
+  grid: false,
+};
 
 export default makeSource({
   // Options
   contentDirPath: "content",
   documentTypes: [Blog],
+  mdx: {
+    remarkPlugins: [remarkGfm],
+    rehypePlugins: [
+      rehypeSlug,
+      [rehypeAutolinkHeadings, { behavior: "append" }],
+      [rehypePrettyCode, codeOptions],
+    ],
+  },
 });
