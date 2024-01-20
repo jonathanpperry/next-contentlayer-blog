@@ -2,6 +2,7 @@ import { format, parseISO } from "date-fns";
 import { slug } from "github-slugger";
 import Link from "next/link";
 import React from "react";
+import ViewCounter from "./ViewCounter";
 
 const BlogDetails = ({ blog, slug: blogSlug }) => {
   return (
@@ -9,11 +10,11 @@ const BlogDetails = ({ blog, slug: blogSlug }) => {
       <time className="m-3">
         {format(parseISO(blog.publishedAt), "LLLL d, yyyy")}
       </time>
-      <span className="m-3">10 views</span>
+      <span className="m-3">
+        <ViewCounter slug={blogSlug} />
+      </span>
       <div className="m-3">{blog.readingTime.text}</div>
-      <Link href={`/categories/${slug(blog.tags[0])}`}>
-        #{blog.tags[0]}
-      </Link>
+      <Link href={`/categories/${slug(blog.tags[0])}`}>#{blog.tags[0]}</Link>
     </div>
   );
 };
