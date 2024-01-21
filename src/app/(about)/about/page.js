@@ -3,6 +3,11 @@ import React from "react";
 import Skills from "./skills";
 import Link from "next/link";
 
+export const metadata = {
+  title: "About Me",
+  description: "Here are some details about myself.",
+};
+
 const About = () => {
   return (
     <>
