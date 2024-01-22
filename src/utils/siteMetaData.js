@@ -16,6 +16,7 @@ const siteMetadata = {
   youtube: "https://youtube.com/jonathanpperry",
   linkedin: "https://www.linkedin.com/in/jonathanpperry/",
   dribbble: "https://www.dribbble.com",
+  leetcode: "https://www.leetcode.com",
   locale: "en-US",
 };
 
