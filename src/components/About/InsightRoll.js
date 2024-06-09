@@ -6,7 +6,9 @@ const InsightRoll = ({ insights }) => {
       <div className="animate-roll w-full py-3 flex items-center justify-center capitalize font-semibold tracking-wider text-base">
         {insights.map((text, index) => (
           <div key={index}>
-            {text} <span className="px-4">|</span>
+            {text}
+            {/* Pipe between insights */}
+            {index != insights.length - 1 && <span className="px-4">|</span>}
           </div>
         ))}
       </div>

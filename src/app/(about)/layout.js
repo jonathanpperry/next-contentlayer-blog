@@ -2,12 +2,11 @@ import InsightRoll from "@/src/components/About/InsightRoll";
 
 const insights = [
   "20+ Projects Completed",
+  "AWS Cloud Practitioner Certified",
   "3+ Years of Freelancing",
   "99% Client Satisfaction",
-  "20K+ Subscribers",
-  "Authored In-Depth Course on Educative",
-  "Contributed as a Technical Course Reviewer 📝",
-  "Recipient of the Hackernoon Noonies Award 🏆",
+  "Contributed to training AI LLMs 📝",
+  "Recipient of Bachelor's in Engineering from University of Michigan 🏆",
 ];
 
 export default function AboutLayout({ children }) {
