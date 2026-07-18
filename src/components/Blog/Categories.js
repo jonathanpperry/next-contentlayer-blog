@@ -1,7 +1,9 @@
 import Category from "./Category";
-import { slug } from "github-slugger";
+import GithubSlugger from "github-slugger";
 
 const Categories = ({ categories, currentSlug }) => {
+  const slugger = new GithubSlugger();
+
   return (
     <div
       className="px-20 mt-10 border-t-2 text-dark border-b-2 border-solid border-dark
@@ -12,7 +14,7 @@ const Categories = ({ categories, currentSlug }) => {
           key={cat}
           link={`/categories/${cat}`}
           name={cat}
-          active={currentSlug === slug(cat)}
+          active={currentSlug === slugger.slug(cat)}
         />
       ))}
     </div>

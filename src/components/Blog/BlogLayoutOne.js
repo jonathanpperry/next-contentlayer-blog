@@ -1,9 +1,11 @@
 import Image from "next/image";
 import Tag from "../Elements/Tag";
 import Link from "next/link";
-import { slug } from "github-slugger";
+import GithubSlugger from "github-slugger";
 
 const BlogLayoutOne = ({ blog }) => {
+  const slugger = new GithubSlugger();
+
   return (
     <div className="group inline-block overflow-hidden rounded-2xl">
       <div
@@ -14,7 +16,7 @@ const BlogLayoutOne = ({ blog }) => {
 
       <div className="w-full absolute bottom-0 p-10 z-20">
         <Tag
-          link={`/categories/${slug(blog.tags[0])}`}
+          link={`/categories/${slugger.slug(blog.tags[0])}`}
           name={blog.tags[0]}
           className="px-6 text-sm py-2 !border"
         />

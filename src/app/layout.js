@@ -4,7 +4,6 @@ import { Inter, Manrope } from "next/font/google";
 import Header from "@/components/Header";
 import Footer from "../components/Footer/footer";
 import siteMetadata from "../utils/siteMetaData";
-import Script from "next/script";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -55,21 +54,14 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={cx(
           inter.variable,
           manrope.variable,
-          "font-mr bg-light dark:bg-dark"
+          "font-mr bg-light dark:bg-dark",
         )}
       >
-        <Script id="theme-switcher" strategy="beforeInteractive">
-          {`if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-    document.documentElement.classList.add('dark')
-  } else {
-    document.documentElement.classList.remove('dark')
-  }`}
-        </Script>
         <Header />
         {children}
         <Footer />

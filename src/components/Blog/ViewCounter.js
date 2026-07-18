@@ -17,13 +17,14 @@ const ViewCounter = ({ slug, noCount = false, showCount = true }) => {
         if (error) {
           console.error(
             "Error incrementing view count inside try block:",
-            error
+            JSON.stringify(error, null, 2),
+            error,
           );
         }
       } catch (error) {
         console.error(
           "An error occurred while incrementing the view count: ",
-          error
+          error,
         );
       }
     };
@@ -43,7 +44,7 @@ const ViewCounter = ({ slug, noCount = false, showCount = true }) => {
         if (error) {
           console.error(
             "Error incrementing view count inside try block:",
-            error
+            error,
           );
         }
 
@@ -52,7 +53,7 @@ const ViewCounter = ({ slug, noCount = false, showCount = true }) => {
       } catch (error) {
         console.error(
           "An error occurred while incrementing the view count: ",
-          error
+          error,
         );
       }
     };

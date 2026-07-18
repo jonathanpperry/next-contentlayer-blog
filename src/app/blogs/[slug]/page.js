@@ -3,7 +3,7 @@ import RenderMdx from "@/components/Blog/RenderMdx";
 import Tag from "@/components/Elements/Tag";
 import siteMetadata from "@/utils/siteMetaData";
 import { getAllBlogs } from "@/lib/blogs";
-import { slug } from "github-slugger";
+import GithubSlugger from "github-slugger";
 import Image from "next/image";
 
 export async function generateStaticParams() {
@@ -15,7 +15,10 @@ export async function generateStaticParams() {
 }
 export async function generateMetadata({ params }) {
   const allBlogs = getAllBlogs();
-  const blog = allBlogs.find((blog) => blog.slug === params.slug);
+
+  const { slug } = await params;
+  const blog = allBlogs.find((blog) => blog.slug === slug);
+
   if (!blog) {
     return;
   }
@@ -63,9 +66,13 @@ export async function generateMetadata({ params }) {
   };
 }
 
-export default function BlogPage({ params }) {
+export default async function BlogPage({ params }) {
   const allBlogs = getAllBlogs();
-  const blog = allBlogs.find((blog) => blog.slug === params.slug);
+
+  const { slug: blogSlug } = await params;
+  const blog = allBlogs.find((blog) => blog.slug === blogSlug);
+
+  const slugger = new GithubSlugger();
 
   let imageList = [siteMetadata.socialBanner];
 
@@ -104,8 +111,7 @@ export default function BlogPage({ params }) {
           <div className="w-full z-10 flex flex-col items-center justify-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
             <Tag
               name={blog.tags[0]}
-              link={`/categories/${slug(blog.tags[0])}`}
-              className="px-6 text-sm py-2"
+              link={`/categories/${slugger.slug(blog.tags[0])}`}
             />
             <h1 className="inline-block mt-6 font-semibold capitalize text-light text-2xl md:text-3xl lg:text-5xl !leading-normal relative w-5/6">
               {blog.title}
