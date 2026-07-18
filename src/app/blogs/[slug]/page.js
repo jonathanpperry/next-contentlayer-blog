@@ -1,17 +1,21 @@
-import BlogDetails from "@/src/components/Blog/BlogDetails";
-import RenderMdx from "@/src/components/Blog/RenderMdx";
-import Tag from "@/src/components/Elements/Tag";
-import siteMetadata from "@/src/utils/siteMetaData";
-import { allBlogs } from "contentlayer/generated";
+import BlogDetails from "@/components/Blog/BlogDetails";
+import RenderMdx from "@/components/Blog/RenderMdx";
+import Tag from "@/components/Elements/Tag";
+import siteMetadata from "@/utils/siteMetaData";
+import { getAllBlogs } from "@/lib/blogs";
 import { slug } from "github-slugger";
 import Image from "next/image";
 
 export async function generateStaticParams() {
-  return allBlogs.map((blog) => ({ slug: blog._raw.flattenedPath }));
-}
+  const allBlogs = getAllBlogs();
 
+  return allBlogs.map((blog) => ({
+    slug: blog.slug,
+  }));
+}
 export async function generateMetadata({ params }) {
-  const blog = allBlogs.find((blog) => blog._raw.flattenedPath === params.slug);
+  const allBlogs = getAllBlogs();
+  const blog = allBlogs.find((blog) => blog.slug === params.slug);
   if (!blog) {
     return;
   }
@@ -20,14 +24,17 @@ export async function generateMetadata({ params }) {
   const modifiedAt = new Date(blog.updatedAt || blog.publishedAt).toISOString();
 
   let imageList = [siteMetadata.socialBanner];
+
   if (blog.image) {
-    imageList =
-      typeof blog.image.filePath === "string"
-        ? [siteMetadata.siteUrl + blog.image.filePath.replace("../public", "")]
-        : blog.image;
+    imageList = [
+      blog.image.startsWith("http")
+        ? blog.image
+        : siteMetadata.siteUrl + blog.image,
+    ];
   }
+
   const ogImages = imageList.map((img) => {
-    return { url: img.includes("http") ? img : siteMetadata.siteUrl + img };
+    return { url: img };
   });
 
   const authors = blog?.author ? [blog.author] : siteMetadata.author;
@@ -57,16 +64,18 @@ export async function generateMetadata({ params }) {
 }
 
 export default function BlogPage({ params }) {
-  const blog = allBlogs.find((blog) => blog._raw.flattenedPath === params.slug);
+  const allBlogs = getAllBlogs();
+  const blog = allBlogs.find((blog) => blog.slug === params.slug);
 
   let imageList = [siteMetadata.socialBanner];
-  if (blog.image) {
-    imageList =
-      typeof blog.image.filePath === "string"
-        ? [siteMetadata.siteUrl + blog.image.filePath.replace("../public", "")]
-        : blog.image;
-  }
 
+  if (blog.image) {
+    imageList = [
+      blog.image.startsWith("http")
+        ? blog.image
+        : siteMetadata.siteUrl + blog.image,
+    ];
+  }
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "NewsArticle",
@@ -103,13 +112,12 @@ export default function BlogPage({ params }) {
             </h1>
           </div>
           <div className="absolute top-0 left-0 right-0 bottom-0 h-full bg-dark/60 dark:bg-dark/40" />
+
           <Image
-            src={blog.image.filePath.replace("../public", "")}
-            placeholder="blur"
-            blurDataURL={blog.image.blurhashDataUrl}
+            src={blog.image}
             alt={blog.title}
-            width={blog.image.width}
-            height={blog.image.height}
+            width={800}
+            height={600}
             className="aspect-square w-full h-full object-cover object-center"
             priority
             sizes="100vw"

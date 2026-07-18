@@ -1,6 +1,6 @@
-import { allBlogs } from "contentlayer/generated";
-import BlogLayoutThree from "@/src/components/Blog/BlogLayoutThree";
-import Categories from "@/src/components/Blog/Categories";
+import { getAllBlogs } from "@/lib/blogs";
+import BlogLayoutThree from "@/components/Blog/BlogLayoutThree";
+import Categories from "@/components/Blog/Categories";
 import GithubSlugger, { slug } from "github-slugger";
 import React from "react";
 
@@ -10,6 +10,7 @@ export async function generateStaticParams() {
   const categories = [];
   const paths = [{ slug: "all" }];
 
+  const allBlogs = getAllBlogs();
   allBlogs.map((blog) => {
     if (blog.isPublished) {
       blog.tags.map((tag) => {
@@ -35,6 +36,8 @@ export async function generateMetadata({ params }) {
 }
 
 const CategoryPage = ({ params }) => {
+  const allBlogs = getAllBlogs();
+
   const allCategories = ["all"];
   const blogs = allBlogs.filter((blog) => {
     return blog.tags.some((tag) => {

@@ -10,10 +10,10 @@ import {
   SunIcon,
   TwitterIcon,
 } from "../Icons";
-import siteMetadata from "@/src/utils/siteMetaData";
+import siteMetadata from "@/utils/siteMetaData";
 import { useThemeSwitch } from "../Hooks/useThemeSwitch";
 import { useState } from "react";
-import { cx } from "@/src/utils";
+import { cx } from "@/utils";
 
 const Header = () => {
   const [mode, setMode] = useThemeSwitch();

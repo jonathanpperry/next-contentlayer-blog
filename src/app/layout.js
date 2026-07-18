@@ -1,7 +1,7 @@
 import "./globals.css";
-import { cx } from "@/src/utils";
+import { cx } from "@/utils";
 import { Inter, Manrope } from "next/font/google";
-import Header from "@/src/components/Header";
+import Header from "@/components/Header";
 import Footer from "../components/Footer/footer";
 import siteMetadata from "../utils/siteMetaData";
 import Script from "next/script";
