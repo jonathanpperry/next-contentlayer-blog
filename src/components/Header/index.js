@@ -23,9 +23,8 @@ const Header = () => {
     setClick(!click);
   };
   return (
-    <header className="w-full p-4  px-5 sm:px-10 flex items-center justify-between">
+    <header className="relative z-50 w-full p-4 px-5 sm:px-10 flex items-center justify-between">
       <Logo />
-
       <button
         className="inline-block sm:hidden z-50"
         onClick={toggle}
@@ -64,7 +63,6 @@ const Header = () => {
           </div>
         </div>
       </button>
-
       <nav
         className=" w-max py-3 px-6 sm:px-8 border border-solid border-dark rounded-full font-medium capitalize  items-center flex  sm:hidden
         fixed top-6 right-1/2 translate-x-1/2 bg-light/80 backdrop-blur-sm z-50
@@ -87,7 +85,7 @@ const Header = () => {
           onClick={() => setMode(mode === "light" ? "dark" : "light")}
           className={cx(
             "w-6 h-6 ease ml-2 flex items-center justify-center rounded-full p-1",
-            mode === "light" ? "bg-dark text-light" : "bg-light text-dark"
+            mode === "light" ? "bg-dark text-light" : "bg-light text-dark",
           )}
           aria-label="theme-switcher"
         >
@@ -98,7 +96,6 @@ const Header = () => {
           )}
         </button>
       </nav>
-
       <nav
         className=" w-max py-3 px-8 border border-solid border-dark rounded-full font-medium capitalize  items-center hidden sm:flex
         fixed top-6 right-1/2 translate-x-1/2 bg-light/80 backdrop-blur-sm z-50"
@@ -116,7 +113,7 @@ const Header = () => {
           onClick={() => setMode(mode === "light" ? "dark" : "light")}
           className={cx(
             "w-6 h-6 ease ml-2 flex items-center justify-center rounded-full p-1",
-            mode === "light" ? "bg-dark text-light" : "bg-light text-dark"
+            mode === "light" ? "bg-dark text-light" : "bg-light text-dark",
           )}
           aria-label="theme-switcher"
         >
